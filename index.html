@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>BurgerStack</title>
+</head>
+
+<body style="margin: 0px; overflow: hidden;" oncontextmenu="return false;">
+  <canvas id="unity-canvas"
+    style="position: fixed; width: 100%; height: 100%; background: #231F20">
+  </canvas>
+
+  <div id="progress-bar" style="position: absolute; left: 0%; right: 100%; top: 49%; bottom: 49%; background-color: white;"></div>
+
+  <script src="Build/Build.loader.js"></script>
+  <script>
+    const settings = {
+      dataUrl: "Build/3873fa10f84d6f3bf87172e841832383.data.unityweb",
+      frameworkUrl: "Build/1d50d6af02dd625d8ab81728d2bdaf45.js.unityweb",
+      codeUrl: "Build/4cf708e32f02e92c9093068780d9d046.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "BurgerStack",
+      productVersion: "1.1",
+      matchWebGLToCanvasSize: true,
+    };
+
+    const progressBar = document.querySelector("#progress-bar");
+
+    setTimeout(() => {
+      createUnityInstance(document.querySelector("#unity-canvas"), settings, (progress) => {
+        progressBar.style.right = 100 * (1 - progress) + "%";
+      }).then(() => {
+        progressBar.style.display = "none";
+      }).catch((message) => {
+        alert(message);
+      });
+    }, 500); // Wait half a second before loading. Makes page more responsive on reload.
+  </script>
+</body>
+
+</html>
